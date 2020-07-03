@@ -16,13 +16,27 @@ a{
 }
 ul{
     padding: 0;
+    display: inline;
 }
 li{
     float: left;
     padding: 1em;
     list-style: none;
 }
-img{
+#imagegallery{
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+#imagegallery li{
+    display: inline;
+}
+#imagegallery li a img{
+    width: 70px;
+    border: 0;
+}
+#placeholder{
     display: block;
     clear: both;
     width: 70%;
