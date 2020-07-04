@@ -1,3 +1,18 @@
+//第七章动态创建标记
+function createLast(){
+    let placeholder = document.createElement('img');
+    placeholder.setAttribute('id','placeholder');
+    placeholder.setAttribute('src','images/kong.jpg');
+    placeholder.setAttribute('alt','my image gallery')
+    let description = document.createElement('p');
+    description.setAttribute('id','description');
+    let  destext = document.createTextNode("Choose an image.");
+    description.appendChild(destext);
+    document.getElementsByTagName('body')[0].appendChild(placeholder);
+    document.getElementsByTagName('body')[0].appendChild(description);
+
+}
+
 //第六章
 function showPic(whichpic) {
     //"placeholder"是否存在
@@ -32,7 +47,10 @@ function prepareGallery() {
     }
 }
 //调用
-window.onload = prepareGallery();
+window.onload=function(){
+    createLast();
+    prepareGallery();
+}
 
 /*
 //第五章及之前
