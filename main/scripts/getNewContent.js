@@ -4,6 +4,7 @@ Cross-Origin Request Blocked:
  The Same Origin Policy disallows reading the remote resource at
   file:///C:/Users/duota/Desktop/self-taught/test%20font-end/JSDOM/main/example.txt. 
   (Reason: CORS request not http)
+  已拦截跨源请求：同源策略禁止读取位于 file:/// 的远程资源。（原因：CORS 请求不是 http）。
 */
 function getNewContent(){
     let request = getHTTPObject();
