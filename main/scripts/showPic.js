@@ -108,7 +108,7 @@ function popUp(winURL) {
 
 window.onload = function () {
     if (!document.getElementsByTagName) return false;
-    var links = document.getElementsByTagName('a');
+    let links = document.getElementsByTagName('a');
     let length = links.length;
     for (let i = 0; i <= length; i++) {
         if (links[i].getAttribute("class") == "popup") {
