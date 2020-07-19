@@ -85,3 +85,18 @@ article img{
 #contact header{
     background-image: url(../images/flag.jpg);
 }
+#imagegallery li{
+    display: inline;
+}
+td{
+    padding: 0.5em 3em;
+}
+dl{
+    overflow: hidden;
+}
+dt{
+    float: left;
+}
+dd{
+    float: left;
+}
