@@ -79,4 +79,6 @@ tr.highlight td{
     color: #223333;
     background-color: #cba;
 }
-
+input.placeholder{
+    color:grey;
+}

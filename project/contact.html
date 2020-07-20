@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <title>One Piece Band</title>
-        <script src="/modernizr.js"></script>
+        <script src="../modernizr.js"></script>
         <link rel="stylesheet" media="screen" href="styles/basic.css"/>
     </head>
     <body>
@@ -19,6 +19,30 @@
                 </ul>
             </nav>
         </header>
+        <article>
+            <h1>联系我们</h1>
+            <!--这里表单没有做服务器端的数据处理-->
+            <form method="POST" action="submit.html">
+                <fieldset>
+                    <p>
+                        <label for="name">昵称:</label>
+                        <input type="text" id="name" name="name" 
+                        placeholder="请输入你的姓名/昵称" required="required"/>
+                    </p>
+                    <p>
+                        <label for="email">邮箱:</label>
+                        <input type="email" id="email" name="email" 
+                        placeholder="请输入你的邮箱" required="required"/>
+                    </p>
+                    <p>
+                        <label for="message">想说的话:</label>
+                        <textarea cols="45" rows="7" id="message" name="message"
+                        required="required" placeholder="请输入你想说的话"></textarea>
+                    </p>
+                    <input type="submit" value="发送" />
+                </fieldset>
+            </form>
+        </article>
         <script src="scripts/global.js"></script>
     </body>
 </html>
