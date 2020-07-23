@@ -319,7 +319,7 @@ function focusLabels() {
     if (!document.getElementsByTagName) return false;
     let labels = document.getElementsByTagName('label');
     for (let i = 0; i < labels.length; i++) {
-        if (!labels.getAttribute('for')) continue;
+        if (!labels[i].getAttribute('for')) continue;
         labels[i].onclick = function () {
             let id = this.getAttribute('for');
             if (!document.getElementById(id)) return false;
@@ -335,18 +335,18 @@ function resetFields(whichform) {
     if (Modernizr.input.placeholder) return;
     for (let i = 0; i < whichform.element.length; i++) {
         let element = whichform.element[i];
-        if(element.type == 'sumbit') continue;
+        if (element.type == 'sumbit') continue;
         let check = element.placeholder || element.getAttribute('placeholder');
-        if(!check) continue;
-        element.onfocus = function(){
+        if (!check) continue;
+        element.onfocus = function () {
             let text = this.placeholder || this.getAttribute('placeholder');
-            if(this.value == text){
+            if (this.value == text) {
                 this.className = '';
                 this.value = '';
             }
         }
-        element.onblur = function(){
-            if(this.value == ''){
+        element.onblur = function () {
+            if (this.value == '') {
                 this.className = 'placeholder';
                 this.value = this.placeholder || this.getAttribute('placeholder');
             }
@@ -354,10 +354,105 @@ function resetFields(whichform) {
         element.onblur;
     }
 }
-function prepareForms(){
-    for (let i = 0; i< document.forms.length; i++) {
-      let thisform = document.forms[i];
-      resetFields(thisform);
+function prepareForms() {
+    for (let i = 0; i < document.forms.length; i++) {
+        let thisform = document.forms[i];
+        resetFields(thisform);
+        thisform.onsubmit = function () {
+          //  return validateForm(this); 
+          if(!validateForm(this)) return false;
+          let article = document.getElementsByTagName('article')[0];
+          if(submitFormWithAjax(this,article)) return false;
+          return true;
+        }
     }
 }
 addLoadEvent(prepareForms);
+function isFilled(field) {
+    if (field.value.replace(' ', '').length == 0) return false;
+    let placeholder = field.placeholder || field.getAttribute('placeholder');
+    return (field.value != placeholder);
+}
+function isEmail(field) {
+    return (field.value.indexOf("@") != -1 && field.value.indexOf('.') != -1);
+}
+function validateForm(whichform) {
+    for (let i = 0; i < whichform.elements.length; i++) {
+        let element = whichform.elements[i];
+        if (element.require == 'require') {
+            if (!isFilled(element)) {
+                alert('请输入' + element.name);
+                return false
+            }
+        }
+        if (element.type == 'email') {
+            if (!isEmail(element)) {
+                alert('请输入' + element.name + '值');
+                return false;
+            }
+        }
+    }
+    return true;
+}
+function getHTTPObject() {
+    if (typeof XMLHttpRequest == "undefined") {
+        XMLHttpRequest = function () {
+            try {
+                return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+            } catch (error) { }
+            try {
+                return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+            } catch (error) { }
+            try {
+                return new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (error) { }
+            return false;
+        }
+    }
+    return new XMLHttpRequest();
+}
+//Ajax
+//原因：CORS 请求不是 HTTP,要加载到服务器运行
+function displayAjaxLoading(element) {
+    while (element.hasChildNodes()) {
+        element.removeChild(element.lastChild);
+    }
+    let content = document.createElement('img');
+    content.setAttribute('src', 'images/loading.gif');
+    content.setAttribute('alt', 'Loading...');
+    element.appendChild(content);
+}
+function submitFormWithAjax(whichform, thetarget) {
+    let request = getHTTPObject();
+    if (!request) { return false; }
+    displayAjaxLoading(thetarget);
+    //name=value&name2=value2&name3=value3 
+    let dataParts = [];
+    let element;
+    for (let i = 0; i < whichform.elements.length; i++) {
+        element = whichform.elements[i];
+        dataParts[i] = element.name + '=' + encodeURIComponent(element.value);
+    }
+    let data = dataParts.join('&');
+    request.open('POST', whichform.getAttribute('action'), true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+            if (request.status == 200 || request.status == 0) {
+                console.log(request.responseText);
+                //let matches = request.responseText.match(/<article>([\s\S]+)<\/article>/);
+                let matches = request.responseText.match(/<article>([\s\S]+)<\/article>/);
+                console.log(matches);
+                if (matches.length > 0) {
+                    thetarget.innerHTML = matches[1];
+                } else {
+                    thetarget.innerHTML = '<p>Error,can nor use ajax. </p>';
+                }
+            } else {
+                thetarget.innerHTML = '<p>' + request.statusText + '</p>';
+            }
+        }
+    }
+    request.send(data);
+    return true;
+}
