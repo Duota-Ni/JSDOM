@@ -1,5 +1,5 @@
 //问：箭头函数中this的值是如何查找的呢？
-//答：向外层作用域一层层地
+//答：向外层作用域一层层地查找this,直到找到有this的定义
 const obj = {
   aaa() {
     setTimeout(function () {
