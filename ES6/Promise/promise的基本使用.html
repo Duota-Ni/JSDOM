@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1.使用setTimeout
+    // setTimeout(() => {
+    //   console.log("helllo");
+    // },600)
+
+    // new Promise((resolve,reject) =>{
+    //   //第一次网络请求代码
+    //   setTimeout(() => {
+    //   resolve()
+    // },1000)
+
+    // })
+    // .then(() =>{
+    //   //第一次处理代码
+    //   console.log("helllo");
+    //   console.log("helllo");
+    //   console.log("helllo");
+    //   console.log("helllo");
+    //   console.log("helllo");
+
+    //   return new Promise((resolve,reject) => {
+    //     //第二次网络请求代码
+    //     setTimeout(() => {
+    //       resolve()
+    //     },1000)
+
+    //   })
+    // })
+    // .then(() => {
+    //    //第二次处理代码
+    //   console.log("world");
+    //   console.log("world");
+    //   console.log("world");
+    //   console.log("world");
+
+    //   return new Promise((resolve,reject) => {
+    //     //第三次网络请求代码
+    //     setTimeout(() => {
+    //       resolve()
+    //     },1000)
+
+    //   })
+    // })
+    // .then(() =>  {
+    //    //第三次处理代码
+    //   console.log("lalall");
+    //   console.log("lalall");
+    //   console.log("lalall");
+    //   console.log("lalall");
+    //   console.log("lalall");
+    // })
+
+    //什么情况下会使用Promise,一般是异步
+    //new -> 构造函数（1.保存一些状态信息，2.执行传入的函数）
+    new Promise((resolve,reject) => {
+      setTimeout(() => {
+        //resolve('hello world')
+        reject('err message')
+      },1000)
+    }).then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.log(err);
+    })
+  </script>
+  
+</body>
+</html>
