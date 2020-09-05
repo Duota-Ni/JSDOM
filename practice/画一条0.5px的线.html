@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画一条0.5px的线</title>
+  <style>
+    .hr{
+      width:300px;
+      background-color: #000000;
+    }
+    .harf{
+      height: 1px;
+      transform: scaleY(0.5);
+    }
+    .one{
+      height: 1px;
+    }
+  </style>
+</head>
+<body>
+  <!--方法一：直接设置高度-->
+  <p>0.5</p>
+  <div class="hr harf"></div>
+  <p>1</p>
+  <div class="hr one"></div>
+</body>
+</html>
