@@ -10,3 +10,5 @@ professional文件夹是《JavaScript 高级程序设计（第3版）》示例�
 
 ES6文件夹关于ES6学习笔记
 
+practice文件夹关于笔试练习  
+
