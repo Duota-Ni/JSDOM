@@ -1,5 +1,5 @@
 //使用对象声明队列
-class Queue {
+export class Queue {
   constructor() {
     this.count = 0;//队列大小
     this.lowestCount = 0;//前端第一个元素
@@ -47,11 +47,11 @@ class Queue {
   }
 }
 
-const queue = new Queue();
-console.log(queue.isEmpty());
-queue.enqueue('jack');
-queue.enqueue('lucy');
-console.log(queue.toString());
-console.log(queue.size());
-queue.dequeue();
-console.log(queue.toString());
+// const queue = new Queue();
+// console.log(queue.isEmpty());
+// queue.enqueue('jack');
+// queue.enqueue('lucy');
+// console.log(queue.toString());
+// console.log(queue.size());
+// queue.dequeue();
+// console.log(queue.toString());

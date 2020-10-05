@@ -52,5 +52,3 @@ export default class Stack{
 // console.log(stack);
 // console.log(stack.pop());
 // console.log(stack);
-
-exports.Stack = Stack;

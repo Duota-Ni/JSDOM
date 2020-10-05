@@ -1,5 +1,5 @@
 //双端队列结构，可以同时从前端和后端添加移除元素
-class Deque {
+export class Deque {
   constructor() {
     this.count = 0;
     this.lowestCount = 0;
@@ -76,18 +76,18 @@ class Deque {
     return objString;
   }
 }
-const deque = new Deque();
-console.log(deque.isEmpty()); // 输出true 
-deque.addBack('John');
-deque.addBack('Jack');
-console.log(deque.toString()); // John, Jack 
-deque.addBack('Camila');
-console.log(deque.toString()); // John, Jack, Camila 
-console.log(deque.size()); // 输出3 
-console.log(deque.isEmpty()); // 输出false 
-deque.removeFront(); // 移除John 
-console.log(deque.toString()); // Jack, Camila 
-deque.removeBack(); // Camila决定离开 
-console.log(deque.toString()); // Jack 
-deque.addFront('John'); // John回来询问一些信息 
-console.log(deque.toString()); // John, Jack
+// const deque = new Deque();
+// console.log(deque.isEmpty()); // 输出true 
+// deque.addBack('John');
+// deque.addBack('Jack');
+// console.log(deque.toString()); // John, Jack 
+// deque.addBack('Camila');
+// console.log(deque.toString()); // John, Jack, Camila 
+// console.log(deque.size()); // 输出3 
+// console.log(deque.isEmpty()); // 输出false 
+// deque.removeFront(); // 移除John 
+// console.log(deque.toString()); // Jack, Camila 
+// deque.removeBack(); // Camila决定离开 
+// console.log(deque.toString()); // Jack 
+// deque.addFront('John'); // John回来询问一些信息 
+// console.log(deque.toString()); // John, Jack
