@@ -26,7 +26,11 @@ xhr.onreadystatechange = function(){
 }
 //必须在open之前指定onreadystatechange,跨浏览器兼容性
 xhr.open("get","example.txt",true)
+xhr.setRequestHeader("MyHeader","MyValue")//自定义额外头部信息
 xhr.send(null);
 
 //在接收响应之前可以使用abort()取消异步请求
 // xhr.abort();
+
+let myHeader = xhr.getResponseHeader("MyHeader");//去某个头部信息
+let allHeader = xhr.getAllResponseHeaders(); //取所有头部信息
