@@ -47,6 +47,8 @@ export class Queue {
   }
 }
 
+export default Queue;
+
 // const queue = new Queue();
 // console.log(queue.isEmpty());
 // queue.enqueue('jack');

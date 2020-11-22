@@ -76,6 +76,7 @@ export class Deque {
     return objString;
   }
 }
+export default Deque;
 // const deque = new Deque();
 // console.log(deque.isEmpty()); // 输出true 
 // deque.addBack('John');
