@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+  <section id="wrap">
+    <h2 class="title">百度音乐榜单</h2>
+    <ul id="list">
+      <!-- <li>
+          <input type="checkbox" />
+          <span>第一条信息</span>
+          <a href="javascript:;" class="collect">收藏</a>
+          <a href="javascript:;" class="cancelCollect">取消收藏</a>
+          <a href="javascript:;" class="remove">删除</a>
+        </li> -->
+    </ul>
+    <footer class="footer">
+      <label><input type="checkbox" id="checkAll" />全选/全不选</label>
+      <a href="javascript:;" id="remove">删除</a>
+      <input type="text" id="newInfo" />
+      <a href="javascript:;" id="add">添加</a>
+    </footer>
+  </section>
+  <script>
+    {
+      let data = [
+        {
+          id: 0,
+          title: "残酷月光 - 费启鸣",
+          checked: true,
+          collect: true
+        }, {
+          id: 1,
+          title: "兄弟 - 艾热",
+          checked: false,
+          collect: false
+        }, {
+          id: 2,
+          title: "毕生 - 夏增祥",
+          checked: false,
+          collect: true
+        }, {
+          id: 3,
+          title: "公子向北去 - 李春花",
+          checked: false,
+          collect: false
+        }, {
+          id: 4,
+          title: "战场 - 沙漠五子",
+          checked: true,
+          collect: false //是否收藏 true 收藏 false 没有收藏
+        }
+      ];
+
+      let checkAll = document.querySelector("#checkAll")
+      let isCheckAll = () => data.every(item => item.checked)
+      let removeCheck = document.querySelector("#remove")
+      let newInfo = document.querySelector("#newInfo")
+
+      let render = () => {
+        let str = ''
+        data.forEach(v => {
+          str += `<li>
+          <input type="checkbox" ${v.checked ? "checked" : ""}/>
+          <span>${v.title}</span>
+          ${v.collect ? '<a href="javascript:;" class="collect">取消收藏</a>' : '<a href="javascript:;" class="cancelCollect">收藏</a>'}
+          <a href="javascript:;" class="remove">删除</a>
+        </li>`
+        })
+        document.querySelector("#list").innerHTML = str
+        checkAll.checked = isCheckAll()
+        addEvent()
+      }
+
+      // 数据驱动
+      let addEvent = () => {
+        let list = document.querySelectorAll("#list li")
+        list.forEach((li, index) => {
+          let checked = li.querySelector("input")
+          let collect = li.querySelector(".collect")
+          let cancelCollect = li.querySelector(".cancelCollect")
+          let remove = li.querySelector(".remove")
+          checked.onchange = function () {
+            // this就是checked.onchange的checked
+            data[index].checked = this.checked
+            render(data)
+          }
+          collect && (collect.onclick = function () {
+            data[index].collect = false
+            render(data)
+          })
+          cancelCollect && (cancelCollect.onclick = function () {
+            data[index].collect = true
+            render(data)
+          })
+          remove.onclick = function () {
+            data = data.filter(item => item !== data[index])
+            render(data)
+          }
+          // 全选/全不选
+          checkAll.onchange = function () {
+            data.forEach(v => {
+              // console.log(this)
+              v.checked = this.checked
+            })
+            render(data)
+          }
+          // 删除选中元素
+          removeCheck.onclick = function () {
+            data = data.filter(item => item.checked !== true)
+            render(data)
+          }
+        })
+      }
+
+
+      document.querySelector("#add").onclick = function () {
+        let value = document.querySelector("#newInfo").value
+        if (!value) {
+          alert("请先输入数据后添加")
+        } else {
+          let item = {
+            id: data.length,
+            title: value,
+            checked: false,
+            collect: false
+          }
+          data.push(item)
+          render(data)
+        }
+      }
+
+      render()
+
+    }
+  </script>
+</body>
+
+</html>
