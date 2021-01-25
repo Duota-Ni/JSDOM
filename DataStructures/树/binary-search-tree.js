@@ -111,7 +111,35 @@ export default class BinarySearchTree {
   }
 
   removeNode(node, key) {
-    
+    if (node == null) {
+      return null
+    }
+    if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+      node.left = this.removeNode(node.left, key)
+      return node
+    } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
+      node.right = this.removeNode(node.right, key)
+      return node
+    } else {
+      // 1.移除叶子节点
+      if (node.left == null && node.right == null) {
+        node == null
+        return null
+      }
+      // 2.移除有左子树或者有右子树的
+      if (node.left == null) {
+        node = node.right
+        return node // 跳过该节点，直接将父节点指向该节点的子节点
+      } else if (node.right == null) {
+        node = node.left
+        return node
+      }
+      // 3.左右子树都有的
+      const aux = this.minNode(this.right) //查找右子树最小节点做替换
+      node.key = aux.key
+      node.right = this.removeNode(node.right, aux.key)
+      return node
+    }
   }
 }
 
