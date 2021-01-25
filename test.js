@@ -1,3 +1,3 @@
-const arr = [1,2,3]
-let map1 = new WeakMap();
-map1.set(first)
+for (let i =3; i >= 0; i -= 1) {
+  console.log(i)
+}
