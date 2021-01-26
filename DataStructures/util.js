@@ -24,3 +24,14 @@ export function swap(array, a, b) {
 export function reverseCompare(compareFn) {
   return (a, b) => compareFn(b, a);
 }
+
+export function defaultToString(item) {
+  if (item === null) {
+    return 'NULL'
+  } else if (item === undefined) {
+    return 'UNDEFINED'
+  } else if (typeof item === 'string' || item instanceof String) {
+    return `${item}`
+  }
+  return item.toString()
+}

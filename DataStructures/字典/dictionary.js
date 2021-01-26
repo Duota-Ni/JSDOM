@@ -1,0 +1,126 @@
+// 字典，即ES6中Map,存储键值对
+import { defaultToString } from '../util.js'
+import { ValuePair } from '../models/value-pair.js'
+
+export default class Dictionary {
+  constructor(toStrFn = defaultToString) {
+    this.toStrFn = toStrFn
+    this.table = {}
+  }
+
+  hasKey(key) {
+    return this.table[this.toStrFn(key)] != null
+  }
+
+  set(key, value) {
+    if(key != null && value != null){
+      const tableKey = this.toStrFn(key)
+      this.table[tableKey] = new ValuePair(key, value)
+      return true
+    }
+    return false
+  }
+
+  remove(key) {
+    if(this.hasKey(key)) {
+      // delete用于删除对象的某个属性
+      delete this.table[this.toStrFn(key)]
+      return true
+    }
+    return false
+  }
+
+  // get(key) {
+  //   if(this.hasKey(key)) {
+  //     return this.table[this.toStrFn(key)]
+  //   }
+  //   return undefined
+  // }
+
+  get(key) {
+    const valuePair = this.table[this.toStrFn(key)];
+    return valuePair == null ? undefined : valuePair.value;
+  }
+
+  keyValues() {
+    // Object.values(obj1) 用于枚举obj1的所有可枚举属性，顺序和使用for..in..一样，区别在于for..in..循环枚举原型链上的属性
+    return Object.values(this.table)
+  }
+
+  // 方法2
+  // keyValues() {
+  //   const ValuePairs = [] 
+  //   for (const k in this.table) {
+  //     if (this.hasKey(k)) {
+  //       ValuePairs.push(this.table[k])
+  //     }
+  //   }
+  //   return ValuePairs
+  // }
+
+  keys() {
+    return this.keyValues().map(valuePair => valuePair.key)
+  }
+
+  values() {
+    return this.keyValues().map(valuePair => valuePair.value)
+  }
+
+  forEach(callbackFn) {
+    const valuePairs = this.keyValues();
+    for (let i = 0; i < valuePairs.length; i++) {
+      const result = callbackFn(valuePairs[i].key, valuePairs[i].value);
+      if (result === false) {
+        break;
+      }
+    }
+  }
+  isEmpty() {
+    return this.size() === 0;
+  }
+  size() {
+    return Object.keys(this.table).length;
+  }
+  clear() {
+    this.table = {};
+  }
+  toString() {
+    if (this.isEmpty()) {
+      return '';
+    }
+    const valuePairs = this.keyValues();
+    let objString = `${valuePairs[0].toString()}`;
+    for (let i = 1; i < valuePairs.length; i++) {
+      objString = `${objString},${valuePairs[i].toString()}`;
+    }
+    return objString;
+  }
+
+}
+
+// const dictionary = new Dictionary();
+
+// dictionary.set('Gandalf', 'gandalf@email.com');
+// dictionary.set('John', 'johnsnow@email.com');
+// dictionary.set('Tyrion', 'tyrion@email.com');
+
+// console.log(dictionary.hasKey('Gandalf')); // true
+// console.log(dictionary.size()); // 3
+
+// console.log(dictionary.keys()); // ["Gandalf", "John", "Tyrion"]
+// console.log(dictionary.values()); // ["gandalf@email.com", "johnsnow@email.com", "tyrion@email.com"]
+// console.log(dictionary.get('Tyrion')); // tyrion@email.com
+
+// dictionary.remove('John');
+
+// console.log(dictionary.keys()); // ["Gandalf", "Tyrion"]
+// console.log(dictionary.values()); // ["gandalf@email.com", "tyrion@email.com"]
+
+// console.log(dictionary.keyValues()); // [{key: "Gandalf", value: "gandalf@email.com"}, {key: "Tyrion", value: "tyrion@email.com"}]
+// console.log(dictionary.toString()); // [#Gandalf: gandalf@email.com],[#Tyrion: tyrion@email.com]
+
+// dictionary.forEach((k, v) => {
+//   console.log('forEach: ', `key: ${k}, value: ${v}`);
+// });
+// // forEach:  key: Gandalf, value: gandalf@email.com
+// // forEach:  key: Tyrion, value: tyrion@email.com
