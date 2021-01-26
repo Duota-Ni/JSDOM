@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="tab1">
+    <button style="background-color: #69cfff;">选项一</button>
+    <button>选项二</button>
+    <button>选项三</button>
+    <p>内容一</p>
+    <p style="display: none">内容二</p>
+    <p style="display: none;">内容三</p>
+  </div>
+  <div class="tab2">
+    <button style="background-color: #69cfff;">选项一</button>
+    <button>选项二</button>
+    <button>选项三</button>
+    <p>内容一</p>
+    <p style="display: none">内容二</p>
+    <p style="display: none;">内容三</p>
+  </div>
+  <script>
+    function Tab(buts, ps) {
+      buts.forEach((value, index, i) => {
+        value.onclick = function () {
+          ps.forEach((val, i) => {
+            if (index === i) {
+              ps[i].style.display = "block"
+              buts[i].style.backgroundColor = "#69cfff"
+            } else {
+              ps[i].style.display = "none"
+              buts[i].style.backgroundColor = ""
+            }
+          })
+        }
+      })
+    }
+
+    const buts1 = document.querySelectorAll(".tab1 button")
+    const ps1 = document.querySelectorAll(".tab1 p")
+    Tab(buts1,ps1)
+    const buts2 = document.querySelectorAll(".tab2 button")
+    const ps2 = document.querySelectorAll(".tab2 p")
+    Tab(buts2,ps2)
+
+  </script>
+</body>
+
+</html>

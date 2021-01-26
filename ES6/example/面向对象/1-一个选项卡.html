@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="tab1">
+    <button style="background-color: #69cfff;">选项一</button>
+    <button>选项二</button>
+    <button>选项三</button>
+    <p>内容一</p>
+    <p style="display: none">内容二</p>
+    <p style="display: none;">内容三</p>
+  </div>
+  <script>
+    const buts = document.querySelectorAll(".tab1 button")
+    const ps = document.querySelectorAll(".tab1 p")
+    buts.forEach((value, index) => {
+      value.onclick = function () {
+        ps.forEach((val, i) => {
+          if (index === i) {
+            ps[i].style.display = "block"
+            buts[i].style.backgroundColor = "#69cfff"
+          } else {
+            ps[i].style.display = "none"
+            buts[i].style.backgroundColor = ""
+          }
+        })
+      }
+    })
+  </script>
+</body>
+
+</html>
