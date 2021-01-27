@@ -18,7 +18,7 @@ const initializeColor = vertices => {
 // 图广度优先遍历优化版，增加获取从最短路径，前溯点
 const BFS = (graph, startVertex, callback) => {
 
-  const vertices = graph.getVerices()
+  const vertices = graph.getVertices()
   const adjList = graph.getAdjList()
   const color = initializeColor(vertices)
 

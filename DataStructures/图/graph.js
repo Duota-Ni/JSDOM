@@ -28,7 +28,7 @@ export default class Graph {
     }
   }
 
-  getVerices() {
+  getVertices() {
     return this.vertices
   }
 

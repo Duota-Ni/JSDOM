@@ -1,4 +1,3 @@
-import Queue from '../队列/queue.js';
 import Graph from './graph.js'
 const Colors = {
   WHITE: 0,
@@ -14,31 +13,32 @@ const initializeColor = vertices => {
   return color
 }
 
-const breadthFirstSearch = (graph, startVertex, callback) => {
-  
+export const depthFirstSearch = (graph, callback) => {
   const vertices = graph.getVertices()
   const adjList = graph.getAdjList()
   const color = initializeColor(vertices)
 
-  const queue = new Queue()
-
-  queue.enqueue(startVertex)
-  while(!queue.isEmpty()) {
-    const u = queue.dequeue()
-    const neighbors = adjList.get(u)
-    color[u] = Colors.GREY
-    for(let i = 0; i < neighbors.length; i++) {
-      const w = neighbors[i]
-      if(color[w] === Colors.WHITE) {
-        color[w] = Colors.GREY
-        queue.enqueue(w)
-      }
-    }
-    color[u] = Colors.BLACK
-    if(callback){
-      callback(u)
+  for(let i = 0; i < vertices.length; i++) {
+    if(color[vertices[i]] === Colors.WHITE) {
+      depthFirstSearchVisit(vertices[i], color, adjList, callback)
     }
   }
+}
+
+// 注意递归，栈调用
+const depthFirstSearchVisit = (u, color, adjList, callback) => {
+  color[u] = Colors.GREY
+  if (callback) {
+    callback(u)
+  }
+  const neighbors = adjList.get(u)
+  for(let i = 0; i < neighbors.length; i++) {
+    const w = neighbors[i]
+    if(color[w] === Colors.WHITE) {
+      depthFirstSearchVisit(w, color, adjList, callback)
+    }
+  }
+  color[u] = Colors.BLACK
 }
 
 const graph = new Graph();
@@ -58,13 +58,7 @@ graph.addEdge('D', 'H');
 graph.addEdge('B', 'E');
 graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
-
 console.log('********* printing graph ***********');
 
-console.log(graph.toString());
-
-console.log('********* bfs with callback ***********');
-
 const printVertex = (value) => console.log('Visited vertex: ' + value);
-
-breadthFirstSearch(graph, myVertices[0], printVertex);
+depthFirstSearch(graph, printVertex)
