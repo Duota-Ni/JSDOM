@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="tab1">
+        <button style="background: red">按钮一</button>
+        <button>按钮二</button>
+        <button>按钮三</button>
+        <p>内容一</p>
+        <p style="display: none">内容二</p>
+        <p style="display: none">内容三</p>
+    </div>
+    <div class="tab2">
+        <button style="background: red">按钮一</button>
+        <button>按钮二</button>
+        <button>按钮三</button>
+        <button>按钮四</button>
+        <p>内容一</p>
+        <p style="display: none">内容二</p>
+        <p style="display: none">内容三</p>
+        <p style="display: none">内容四</p>
+    </div>
+
+    <button class="nextPre">点击我下一页</button>
+    <button class="autoPlay">点击我第二个选项卡自动轮播</button>
+</body>
+<script>
+    // 一个选项卡  --》按照需求一步步走
+    // 多个选项卡； ---> 把共同逻辑提取；
+    // 第一个选项卡 有 下一页功能； （某一个的功能）  
+    // 第二个选项卡  有轮播功能； 
+
+    // 抽象 事物 ---》 属性 和方法；
+
+    // 所有 选项卡共性的位置 封装； 部分：传配置  独一无二的  单独处理
+    function Tab(btns, ps, isNextPre = false, isAutoPlay = false) {
+        // 所有选项卡 共有的功能；
+        btns.forEach((value, key) => {
+            value.onclick = function () {
+                psFor(key);
+            }
+        })
+        // 下一页
+        // if (isNextPre) {
+        //     // 第一个选项卡
+        //     let num = 0;
+        //     document.querySelector(".nextPre").onclick = function () {
+        //         num++;
+        //         num = num > 2 ? 0 : num;
+        //         psFor(num);
+        //     }
+        // }
+
+        // // 控制自动轮播
+        // if(isAutoPlay){
+        //     // 第二个选项卡的
+        //     document.querySelector(".autoPlay").onclick = function(){
+        //         let num = 0;
+        //         setInterval(() => {
+        //              num++;
+        //              num = num > 2 ? 0 : num;
+        //              psFor(num);
+        //         }, 1000);
+        //     }
+        // }
+        function psFor(key) {
+            ps.forEach((v, k) => {
+                if (key == k) {
+                    btns[k].style.background = "red";
+                    ps[k].style.display = "block";
+                } else {
+                    btns[k].style.background = "";
+                    ps[k].style.display = "none";
+                }
+            })
+        }
+        let obj = {};
+        obj.psFor = psFor;
+        obj.eleLength = btns.length;
+        return obj;
+    }
+    let btns = document.querySelectorAll(".tab1 button");
+    let ps = document.querySelectorAll(".tab1 p");
+    let tab1 = Tab(btns, ps);
+    let num = 0;
+    document.querySelector(".nextPre").onclick = function () {
+        num++;
+        num = num > tab1.eleLength-1 ? 0 : num;
+        tab1.psFor(num);
+    }
+    let btns2 = document.querySelectorAll(".tab2 button");
+    let ps2 = document.querySelectorAll(".tab2 p");
+    let tab2 = Tab(btns2, ps2);
+    let num2 = 0;
+    document.querySelector(".autoPlay").onclick = function () {
+        let num2 = 0;
+        setInterval(() => {
+            num2++;
+            num2 = num2 > tab2.eleLength-1 ? 0 : num2;
+            tab2.psFor(num2);
+        }, 1000);
+    }
+
+    // 工厂模式；
+
+// 作业：通过构造函数改造 多个选项卡；
+// 1. 抽象  选项卡类：  属性：btns 、ps  方法：psfor
+// 不要出现过多函数嵌套；
+
+</script>
+
+</html>

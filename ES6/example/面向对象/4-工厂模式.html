@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="tab1">
+        <button style="background: red">按钮一</button>
+        <button>按钮二</button>
+        <button>按钮三</button>
+        <p>内容一</p>
+        <p style="display: none">内容二</p>
+        <p style="display: none">内容三</p>
+    </div>
+    <div class="tab2">
+        <button style="background: red">按钮一</button>
+        <button>按钮二</button>
+        <button>按钮三</button>
+        <button>按钮四</button>
+        <p>内容一</p>
+        <p style="display: none">内容二</p>
+        <p style="display: none">内容三</p>
+        <p style="display: none">内容四</p>
+    </div>
+
+    <button class="nextPre">点击我下一页</button>
+    <button class="autoPlay">点击我第二个选项卡自动轮播</button>
+</body>
+<script>
+//    工厂模式
+function Tab(){
+    //添加原料
+    let obj = {};
+    //加工原料
+    obj.tablength = 1;
+    obj.psFor = function(){
+        console.log("psFor....");
+    }
+    //出厂
+    return obj;
+}
+
+function Page(){
+    return {
+      t:'2'
+    }
+}
+// 缺点一：
+// 对象识别问题；
+let tab1 = Tab();
+let tab2 = Tab();
+let page = Page();
+
+console.log(tab1.constructor) // function Object()
+console.log(page.constructor) // function Object()
+console.log(tab2.constructor) // function Object()
+// tab1.psFor();
+// let tab1 = Tab();
+// let tab2 = Tab();
+// tab2.psFor();
+// 缺点二：性能问题；
+// let str = new String();  //判断类型
+// let obj = new Object();
+console.log(tab1.psFor===tab2.psFor);
+console.log(tab1);
+console.log(tab2);
+console.log(tab1 === tab2);
+// 公共空间：原型 prototype； ---》  new 运算符；
+
+function test() {
+  return "22"
+}
+
+let test1 = test()
+let test2 = test()
+console.log(test1); // 22
+console.log(test2); // 22
+console.log(test() === test()); //true
+ 
+</script>
+
+</html>

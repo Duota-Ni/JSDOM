@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // new运算符做了什么：1.执行函数，2.创建一个空对象 3.把创建的对象指向另外一个对象；
+    // 4.把空对象和函数里的this 衔接起来；(this指向实例化对象) 5.隐式返还this
+
+    // 简化工厂函数模式-->构造函数模式
+    // 1.约定俗成：首字符大写；
+    // 2.属性放在构造函数；方法放在原型；
+    function Tab() {
+      // let obj = {} -->指向this
+      this.name = "杨洋"
+      // this.hobby = function () {
+      //   console.log("打篮球")
+      // }
+      // return obj 隐式返回this
+    }
+    Tab.prototype.eat = function () {
+      console.log("草莓")
+    }
+    Tab.prototype.hobby = function () {
+      console.log("打篮球",this.name) //原型的this和构造函数的this指向同一个
+    }
+
+    // 每个原型都有一个预定义属性，constructor-->构造函数
+    // Tab.prototype = {
+    //   constructor:Tab, //不要这么写Tab.prototype = {..},除非加上constructor指向其构造函数
+    //   eat() {
+    //     console.log("草莓")
+    //   },
+    //   hobby() {
+    //     console.log("打篮球",this.name) 
+    //   }
+    // }
+    
+    // let tab1 = new Tab() // this指向实例化对象，这里的this指向tab1
+    // console.log(tab1.constructor === Tab)
+    // console.log(tab1.__proto__ === Tab.prototype) //true
+
+    // let tab2 = new Tab() // this指向实例化对象，这里的this指向tab2
+    // console.log(tab1) 
+    // console.log(tab2) //tab1和tab2内容相同，存储位置不同
+    // console.log(tab1 === tab2) //false
+    // console.log(tab1.name === tab2.name) //true 栈内存
+    // console.log(tab1.hobby === tab2.hobby) //true hobby函数（也是对象）都存储在prototype里面，同一个地址，堆内存，指针问题
+    // tab1.hobby() //打篮球 杨洋
+
+    // 仿写new运算符
+    function myNew(constructor, ...arg) {
+      let obj = {}
+      constructor.call(obj, ...arg)
+      obj.__proto__ = constructor.prototype
+      return obj
+    }
+
+    let test = myNew(Tab)
+    console.log(test.name)
+    test.hobby()
+  </script>
+</body>
+
+</html>
