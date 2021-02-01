@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .mydiv1 {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position: absolute;
+    }
+
+    .mydiv2 {
+      width: 100px;
+      height: 100px;
+      background-color: green;
+      position: absolute;
+      left: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mydiv1"></div>
+  <div class="mydiv2"></div>
+  <script>
+    // 面向对象；
+    function Drag(ele) {
+      this.ele = ele;
+      this.downFn();
+    }
+    Drag.prototype.downFn = function () {
+      this.ele.onmousedown = e => {
+        let ev = e || window.event;
+        let x = ev.clientX - this.ele.offsetLeft;
+        let y = ev.clientY - this.ele.offsetTop;
+        this.moveFn(x, y);
+        this.upFn();
+      }
+    }
+    Drag.prototype.moveFn = function (x, y) {
+      this.ele.onmousemove = e => {
+        let ev = e || window.event;
+        let xx = ev.clientX;
+        let yy = ev.clientY;
+        this.setStyle(xx - x, yy - y);
+      }
+    }
+    Drag.prototype.setStyle = function (leftNum, topNum) {
+      this.ele.style.left = leftNum + "px";
+      this.ele.style.top = topNum + "px";
+    }
+
+    Drag.prototype.upFn = function () {
+      this.ele.onmouseup = () => {
+        this.ele.onmousemove = "";
+      }
+    }
+
+    let mydiv1 = document.querySelector(".mydiv1");
+    let drag1 = new Drag(mydiv1);
+
+    // 继承 
+    function DragLimit(ele) {
+      Drag.call(this, ele)
+    }
+    // function Link() { }
+    // Link.prototype = Drag.prototype
+    // DragLimit.prototype = new Link()
+    DragLimit.prototype = deepClone(Drag.prototype)
+    DragLimit.prototype.constructor = DragLimit
+
+    DragLimit.prototype.setStyle = function (leftNum, topNum) {
+      leftNum = leftNum < 0 ? 0 : leftNum;
+      topNum = topNum < 0 ? 0 : topNum;
+      this.ele.style.left = leftNum + "px";
+      this.ele.style.top = topNum + "px";
+    }
+    let mydiv2 = document.querySelector(".mydiv2");
+    let drag2 = new DragLimit(mydiv2);
+
+    function deepClone(obj) {
+      //过滤特殊情况
+      if (obj === null) return null;
+      if (typeof obj !== 'object') return obj;
+      if (obj instanceof RegExp) {
+        return new RegExp(obj)
+      }
+      if (obj instanceof Date) {
+        return new Date(obj)
+      }
+
+      let newObj = Array.isArray(obj) ? [] : {};
+      // let newObj = {}
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = deepClone(obj[key]);
+        }
+      }
+      return newObj;
+    }
+    // 面向过程
+    // mydiv1.onmousedown = e => {
+    //   let ev = e || window.event
+    //   let x = ev.clientX - mydiv1.offsetLeft
+    //   let y = ev.clientY - mydiv1.offsetTop
+    //   mydiv1.onmousemove = e2 => {
+    //     let ev2 = e2 || window.event
+    //     let xx = ev2.clientX
+    //     let yy = ev2.clientY
+    //     mydiv1.style.left = xx - x + "px"
+    //     mydiv1.style.top = yy - y + "px"
+    //   }
+    //   mydiv1.onmouseup = function() {
+    //     mydiv1.onmousemove = ""
+    //   }
+  </script>
+</body>
+
+</html>

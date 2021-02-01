@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+
+  class Drag {
+    static height = "178cm";
+    static test() {
+      console.log("test...");
+    }
+    constructor(age) {
+      this.name = "张三";
+      this.age = age;
+    }
+    hobby() {
+      console.log("篮球");
+    }
+    setStyle() {
+      console.log("父类逻辑");
+    }
+  }
+
+
+  class LimitDrag extends Drag {
+    constructor(age) {
+      super(age);
+    }
+    setStyle() {
+      super.setStyle();
+      console.log("子类逻辑");
+    }
+  }
+  // console.log(LimitDrag.height);
+
+  let drag2 = new LimitDrag(20);
+  drag2.setStyle(); //会同时打印父类逻辑和子类逻辑，super.setStyle() 继承了
+// console.log( drag2.height);
+// 作业：通过es6类 改造 drag；
+
+
+
+
+</script>
+
+</html>

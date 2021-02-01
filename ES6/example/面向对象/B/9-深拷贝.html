@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // let a = 10;
+  // let b = a;
+  // b = 20;
+  // console.log(a);
+  let obj = {
+    name: "张三",
+    age: 20,
+    arr: [1, 2, 3],
+    obj3: {
+      yangyang: "三生三世十里桃花",
+      cc: "花木兰"
+    },
+    test: undefined,
+    fn: function () {
+      console.log("fn...");
+    },
+    test2: null,
+    test3: /1-9/g
+  }
+  // let obj2 = JSON.parse(JSON.stringify(obj));
+  let obj2 = deepCopy(obj);
+  obj2.age = 30;
+  console.log(obj, obj2);
+  
+  // 不完整，未解决正则和Date问题，解决方案看总结的Campus...
+  function deepCopy(obj) {
+    let newObj = Array.isArray(obj) ? [] : {}
+    for (let i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        if (typeof obj[i] !== "object" || obj[i] === null) {
+          newObj[i] = obj[i]
+        } else {
+          newObj[i] = deepCopy(obj[i])
+        }
+      }
+    }
+    return newObj
+  }
+// 02.01.45
+
+
+</script>
+
+</html>

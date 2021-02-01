@@ -56,8 +56,8 @@
     // 仿写new运算符
     function myNew(constructor, ...arg) {
       let obj = {}
-      constructor.call(obj, ...arg)
       obj.__proto__ = constructor.prototype
+      constructor.call(obj, ...arg)
       return obj
     }
 
