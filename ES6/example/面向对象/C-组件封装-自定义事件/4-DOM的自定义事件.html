@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const elem = new EventTarget()
+
+    const event = new Event("build");
+    const event2 = new CustomEvent("custom", {"detail": "hhhh"})
+
+    const fn = function(e) {
+      console.log("new Event的事件...");
+    }
+    const fn2 = function(e) {
+      console.log("new CustomEvent的事件...", e);
+    }
+    
+    elem.addEventListener("build", fn, false);
+    elem.addEventListener("custom", fn2, false);
+    
+    elem.dispatchEvent(event);
+    elem.dispatchEvent(event2);
+
+  </script>
+</body>
+
+</html>

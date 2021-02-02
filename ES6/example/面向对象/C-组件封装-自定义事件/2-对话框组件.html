@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .k-dialog {
+      width: 30%;
+      z-index: 2001;
+      display: block;
+      position: absolute;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+      margin: 0 auto;
+      top: 15vh;
+      left: 30%;
+      display: none;
+    }
+
+    .k-wrapper {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      bottom: 0px;
+      right: 0px;
+      background: black;
+      opacity: 0.4;
+      z-index: 2000;
+      display: none;
+    }
+
+    .k-header {
+      padding: 20px 20px 10px;
+    }
+
+    .k-header .k-title {
+      line-height: 24px;
+      font-size: 18px;
+      color: #303133;
+      float: left;
+    }
+
+    .k-body {
+      padding: 30px 20px;
+      color: #606266;
+      font-size: 14px;
+    }
+
+    .k-footer {
+      padding: 10px 20px 30px;
+      text-align: right;
+    }
+
+    .k-close {
+      color: #909399;
+      font-weight: 400;
+      float: right;
+      cursor: pointer;
+    }
+
+    .k-cancel {
+      color: #606266;
+      border: 1px solid #dcdfe6;
+      text-align: center;
+      cursor: pointer;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+
+    .k-cancel:hover {
+      color: #409eff;
+      background: #ecf5ff;
+      border-color: #c6e2ff;
+    }
+
+    .k-primary {
+      border: 1px solid #dcdfe6;
+      text-align: center;
+      cursor: pointer;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 4px;
+      font-weight: 500;
+      background: #409eff;
+      color: #fff;
+      margin-left: 10px;
+    }
+
+    .k-primary:hover {
+      background: #66b1ff;
+    }
+
+    .k-input {
+      width: 100%;
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .input-inner {
+      -webkit-appearance: none;
+      background-color: #fff;
+      background-image: none;
+      border-radius: 4px;
+      border: 1px solid #dcdfe6;
+      box-sizing: border-box;
+      color: #606266;
+      display: inline-block;
+      font-size: inherit;
+      height: 40px;
+      line-height: 40px;
+      outline: none;
+      padding: 0 15px;
+      transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="k-wrapper"></div>
+  <div class="k-dialog">
+    <div class="k-header">
+      <span class="k-title">提示</span><span class="k-close">X</span>
+    </div>
+    <div class="k-body">
+      <span>这是一段文本</span>
+      <input class="input-inner" type="text" />
+    </div>
+    <div class="k-footer">
+      <span class="k-cancel">取消</span>
+      <span class="k-primary">确定</span>
+    </div>
+  </div> -->
+  <button class="dialog1">点击</button>
+  <button class="dialog2">点击2</button>
+</body>
+<script>
+  // class MyEvent {
+  //   constructor() {
+  //     this.handle = {}
+  //   }
+
+  //   addEvent(eventName, fn) {
+  //     if (typeof this.handle[eventName] === 'undefined') {
+  //       this.handle[eventName] = []
+  //     }
+  //     this.handle[eventName].push(fn)
+  //   }
+
+  //   trigger(eventName) {
+  //     if (!(eventName in this.handle)) {
+  //       return
+  //     }
+  //     this.handle[eventName].forEach(v => v())
+  //   }
+
+  //   removeEvent(eventName, fn) {
+  //     if (!(eventName in this.handle)) {
+  //       return
+  //     }
+  //     for (let i = 0; i < this.handle[eventName].length; i++) {
+  //       if (this.handle[eventName][i] === fn) {
+  //         this.handle[eventName].splice(i, 1)
+  //         break
+  //       }
+  //     }
+  //   }
+  // }
+
+  // EventTarget参考MDN
+  class Dialog extends EventTarget {
+    constructor(options) {
+      super()
+      this.opts = Object.assign({
+        width: "30%",
+        height: "200px",
+        title: "测试标题",
+        content: "测试内容",
+        dragable: true, //是否可拖拽
+        maskable: true, //是否有遮罩
+        isCancel: false, //是否有取消
+        success() {
+          console.log("默认点击确定了。。");
+        },
+        cancel() {
+          console.log("默认点击取消了。。");
+        }
+      }, options)
+      // console.log(this.opts)
+      this.init()
+    }
+
+    init() {
+      this.renderView()
+      // this.dialogHtml.querySelector(".k-close").onclick = () => {
+      //   // console.log(this);
+      //   this.close()
+      // }
+      // if (this.dialogHtml.querySelector(".k-cancel")) {
+      //   this.dialogHtml.querySelector(".k-cancel").onclick = () => {
+      //     this.close()
+      //   }
+      // }
+      // this.dialogHtml.querySelector(".k-primary").onclick = () => {
+      //   this.close()
+      // }
+      // this.addEvent("cancel",this.opts.cancel)
+      // this.addEvent("success",this.opts.success)
+
+      const cancel = new Event("cancel") //注意new Event新建事件
+      this.addEventListener("cancel", this.opts.cancel)
+      // const success = new Event("success")
+      this.addEventListener("success", this.opts.success)
+
+      // 事件委托
+      this.dialogHtml.onclick = e => {
+        // console.log(e.target.className);
+        switch (e.target.className) {
+          case "k-close":
+            this.close()
+            // this.opts.cancel()
+            // this.trigger("cancel")
+            this.dispatchEvent(cancel)//注意派发的是new
+            break
+          case "k-cancel":
+            this.close()
+            // this.opts.cancel()
+            // this.trigger("cancel")
+            this.dispatchEvent(cancel)
+            break
+          case "k-primary":
+            this.close()
+            // this.opts.success()
+            // this.trigger("success")
+            // this.dispatchEvent(success)
+            this.confirm()
+            break
+        }
+      }
+    }
+
+    confirm(value) {
+      const success = new CustomEvent("success", {
+        detail: value
+      })
+      console.log("33",this)
+      this.dispatchEvent(success)
+    }
+
+    // 关闭对话框
+    close() {
+      this.dialogHtml.querySelector(".k-wrapper").style.display = "none"
+      this.dialogHtml.querySelector(".k-dialog").style.display = "none"
+    }
+
+    // 显示对话框
+    open() {
+      if (this.opts.maskable) {
+        this.dialogHtml.querySelector(".k-wrapper").style.display = "block";
+      }
+      this.dialogHtml.querySelector(".k-dialog").style.display = "block"
+    }
+
+    renderView() {
+      this.dialogHtml = document.createElement("div")
+      this.dialogHtml.innerHTML = `<div class="k-wrapper"></div>
+                <div class="k-dialog" style="width:${this.opts.width};height:${this.opts.height}">
+                  <div class="k-header">
+                    <span class="k-title">${this.opts.title}</span><span class="k-close">X</span>
+                  </div>
+                  <div class="k-body">
+                    <span>${this.opts.content}</span>
+                  </div>
+                  <div class="k-footer">
+                    ${this.opts.isCancel ? '<span class="k-cancel">取消</span>' : ''}
+                    <span class="k-primary">确定</span>
+                  </div>
+                </div>`
+      document.querySelector("body").appendChild(this.dialogHtml)
+    }
+  }
+
+  class ExtendsDialog extends Dialog {
+    constructor(options) {
+      super(options)
+      this.renderInput()
+    }
+
+    renderInput() {
+      let myInput = document.createElement("input")
+      myInput.type = "text"
+      myInput.classList.add("input-inner")
+      this.dialogHtml.querySelector(".k-body").appendChild(myInput)
+    }
+
+    confirm() {
+      const value = this.dialogHtml.querySelector(".input-inner").value
+      super.confirm(value)
+    }
+  }
+
+  // 调用
+  let dialog = new Dialog({
+    width: "40%",
+    height: "250px",
+    title: "测试标题1",
+    isCancel: true,
+    maskable: false, //是否有遮罩
+    success() {
+      console.log("点击确定了。。");
+    },
+    cancel() {
+      console.log("点击取消了。。");
+    }
+  })
+  // 点击打开对话框
+  document.querySelector(".dialog1").onclick = function () {
+    dialog.open()
+  }
+
+  let dialog2 = new ExtendsDialog({
+    width: "40%",
+    height: "250px",
+    title: "测试标题1",
+    isCancel: true,
+    maskable: false, //是否有遮罩
+    success(e) {
+      console.log("点击确定了。。", e.detail);
+    },
+    cancel() {
+      console.log("点击取消了。。");
+    }
+  })
+  // 点击打开对话框
+  document.querySelector(".dialog2").onclick = function () {
+    dialog2.open()
+  }
+</script>
+
+</html>

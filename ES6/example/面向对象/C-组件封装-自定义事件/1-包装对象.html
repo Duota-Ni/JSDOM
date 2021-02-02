@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// let arr = [1,2,3];
+// console.log(arr);
+// arr.push(4);
+// string number boolean
+let str = "a b c";
+
+// let str = new String("a b c");
+// console.log(str);
+// console.log(str);
+// let arr = str.split(" ");
+// console.log(arr);
+
+function mysplit(str,method,arg){
+    let temp = new String(str);
+    console.log(temp);
+    console.log(temp[method]);
+    return temp[method](arg);
+    //销毁包装对象；
+}
+let arr = mysplit(str,"split"," ");
+console.log(arr);
+
+
+// hasOwnProperty();
+// contructor  
+
+// function Person(){
+//     this.name = "张三";
+// }
+
+// Person.prototype.constructor;
+// let zhangsan = new Person();
+// // console.log(zhangsan.constructor===Person);
+// let arr  = [1,2,3];
+// console.log(arr.constructor===Array);
+
+// instanceof
+// let arr = [];
+// console.log(arr instanceof Array);
+// console.log(arr instanceof Object);
+
+// let arr = [];
+// let obj = {};
+// console.log(typeof arr);
+// console.log(typeof obj);
+
+// let res = Object.prototype.toString.call(arr);
+// let res2 = Object.prototype.toString.call(obj);
+// console.log(res);
+// console.log(res==="[object Array]");
+
+
+
+
+
+
+</script>
+</html>
