@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>方块的运动</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <script>
+    // const style = window.getComputedStyle(elem, null)["left"]
+    function move(ele, arg, target, cb) {
+      let start = parseInt(window.getComputedStyle(ele, null)[arg])
+      let dis = (target - start) / Math.abs(target - start)
+      let speed = dis * 5
+      function fn() {
+        let now = parseInt(window.getComputedStyle(ele, null)[arg])
+        if (now === target) {
+          // console.log("运动完成")
+          cb && cb("运动完成")
+        } else {
+          ele.style[arg] = now + speed + "px"
+          // setTimeout(fn, 100)
+          window.requestAnimationFrame(fn)
+        }
+      }
+      fn()
+    }
+    const elem = document.querySelector(".box")
+    move(elem, "left", 200, function (res) {
+      move(elem, "top", 200, function (res) {
+        move(elem, "left", 0, function (res) {
+          move(elem, "top", 0, function (res) {
+            console.log(res)
+          })
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

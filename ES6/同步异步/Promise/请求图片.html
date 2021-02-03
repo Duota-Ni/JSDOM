@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 回调的实现
+    // function loadingImg(cb) {
+    //   let img = new Image()
+    //   img.src = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1753095548,9823469&fm=26&gp=0.jpg"
+    //   // img.src = "https://1.bdstatic.com/70cFvXSh_Q1YnxG"
+    //   img.onload = function(eve) {
+    //     console.log("图片加载成功",eve)
+    //     cb && cb()
+    //   }
+    //   img.onerror = function(err) {
+    //     console.log("图片加载失败",err)
+    //   }
+    // }
+    // loadingImg(function(){
+    //   console.log("这里是回调函数");
+    // })
+
+    // Promise的实现
+    function loadingImg() {
+      return new Promise((reslove, reject) => {
+        let img = new Image()
+        // img.src = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1753095548,9823469&fm=26&gp=0.jpg"
+        img.src = "https://1.bdstatic.com/70cFvXSh_Q1YnxG"
+        img.onload = function (eve) {
+          // console.log("图片加载成功", eve)
+          reslove("图片加载成功")
+        }
+        img.onerror = function (err) {
+          // console.log("图片加载失败", err)
+          reject(err)
+        }
+      })
+    }
+    loadingImg().then(res => {
+      console.log(res)
+      console.log("成功之后的逻辑")
+    },err => {
+      console.log(err)
+    })
+  </script>
+</body>
+
+</html>

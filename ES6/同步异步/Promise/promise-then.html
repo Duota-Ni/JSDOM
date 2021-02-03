@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  let p = new Promise((resolve, reject) => {
+    // console.log(1111);
+    // setTimeout(() => {
+    // console.log(1111);
+    // resolve("success");
+    // console.log(11111);
+    // reject('error');
+    // }, 1000);
+  });
+  // console.log(p);
+  // promise对象的三种状态： pending 、resolved :fulfilled(火狐) 和 rejected ；
+  // 提供方法；
+
+  // then: 接收2个参数 onresolved,onrejected  ； 
+  // then(fulfilled function, rejection function)
+  // p.then(function (res) {
+  //   console.log("成功回调", res);
+  // }, function (err) {
+  //   console.log("失败回调 ", err);
+  // });
+
+  // 三种返回值；1.then的回调  不返还；默认返还resolved状态 promise对象；
+  // 2.then的回调  返还非promise对象；默认返还 resolved状态 promise对象 传参 ；
+  // 3.直接return promise对象 将返回pending状态的promise
+
+  // 1.then里面函数为空的时候，
+  let p2 = p.then(console.log("22"))
+  // let p2 = p.then(function () {
+  //   return new Promise((resolve) => {
+  //     resolve();
+  //   });
+  // })
+
+console.log(p2);
+// p2.then();
+
+
+
+
+
+</script>
+
+</html>
