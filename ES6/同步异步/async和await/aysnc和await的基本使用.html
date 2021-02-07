@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 异步函数-- > 同步写法；
+  // function fn() {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       console.log(1111);
+  //       resolve("成功");
+  //     }, 1000);
+  //   })
+  // }
+  // fn().then(res => {
+  //   console.log(res);
+  // });
+
+    // es7 语法；await相当于取代了then
+    async function myfn() {
+
+      try {
+        // await  后面一定要跟一个  promise对象 ；
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log(1111);
+            //  resolve();
+            reject("错误");
+          }, 1000);
+        })
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log(2222);
+            resolve();
+          }, 2000);
+        })
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log(3333);
+            resolve();
+          }, 1000);
+        })
+      } catch (err) {
+        console.log(err);
+      }
+
+    }
+    myfn();
+
+
+
+
+
+
+</script>
+
+</html>
