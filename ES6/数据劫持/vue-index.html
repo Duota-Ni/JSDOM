@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{message}}
+    <div v-html="htmlData"></div>
+    <!-- <div v-text="testData"></div> -->
+    <input v-model="modelData" /> {{modelData}}
+  </div>
+</body>
+<script>
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      testData: "<p>111</p>",
+      message: "测试数据",
+      htmlData: "html数据",
+      modelData: "双绑数据"
+    }
+  })
+  console.log(vm);
+  setTimeout(() => {
+    console.log(111)
+    // vm.message  = "修改的值";
+    // console.log(vm.$options.data().)
+    vm.$options.data().message = "修改的值";
+  }, 1000);
+// vm.message
+
+
+
+</script>
+
+</html>

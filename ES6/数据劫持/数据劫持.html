@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据劫持</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+let data = {
+    message:"测试数据"
+}
+// console.log(data);
+Object.defineProperty(data,"message",{
+    get(){
+        console.log("get..");
+        return "测试数据"; // data['message']
+    },
+    set(newValue){
+        console.log("set..",newValue);
+    }
+})
+// console.log(data);
+data.message = "修改"
+
+// let o = {};
+// Object.defineProperty(o,"message",{
+//     configurable:true,
+//     enumerable:true,
+//     get(){
+//         console.log("get..");
+//         return "测试数据";
+//     },
+//     set(newValue){
+//         console.log("set..",newValue);
+//     }
+// })
+
+
+// console.log(o);
+// delete o.message;
+// console.log(o);
+// for(let i in o){
+//     console.log(i);
+// }
+
+
+
+</script>
+</html>

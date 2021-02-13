@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script type="module">
+
+// console.log(num);
+// console.log(c);
+// import {b as d,c} from './a.js';
+// console.log(d,c);
+// import * as obj from "./a.js";
+// console.log(obj);
+// console.log(this);
+// 按需导入（延迟导入）；import方法:返还一个promise对象；
+document.onclick =async function(){
+    // import num from './a.js';
+    // import("./a.js").then(res=>{
+    //     console.log(res);
+    // })
+      let res = await import("./a.js");
+      console.log(res);
+}
+
+
+
+</script>
+</html>
