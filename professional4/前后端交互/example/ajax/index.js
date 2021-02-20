@@ -45,5 +45,15 @@ router.post("/fileUpload", (ctx, next) =>{
   fs.writeFileSync("static/imgs/"+ctx.request.files.myfile.name, fileData)
   ctx.body = "请求成功"
 })
+
+router.post("/myajax",ctx=>{
+  // console.log(111);
+  // console.log(ctx.request.body);
+  // ctx.body = "some value11...";
+  ctx.body = {
+      name:"李四",
+      age:29
+  }
+})
 app.use(router.routes())
 app.listen(3000)

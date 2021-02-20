@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击请求jsonp</button>
+</body>
+<script src="./jsonp.js"></script>
+<script>
+  let btn = document.querySelector("button");
+  btn.onclick = function () {
+    ajax({
+      url: "http://localhost:4000/getAjax",
+      data: {
+        name: "张三",
+        age: 20
+      },
+      dataType: "jsonp",
+      jsonp: "callback",
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  }
+</script>
+
+</html>
