@@ -36,3 +36,7 @@ function ajax(options) {
     return keys.map((v, k) => `${v}=${values[k]}`).join("&")
   }
 }
+
+// 使用post方法去请求数据需要setRequestHeader, formDatac除外
+// xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+// xhr.setRequestHeader("content-type", "application/json");
