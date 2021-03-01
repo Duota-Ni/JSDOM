@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button class="get">发送get请求</button>
+  <script>
+    const getbut = document.querySelector(".get")
+    getbut.onclick = function () {
+      const xhr = new XMLHttpRequest()
+      xhr.open("get", "/getAjax", true)
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          console.log("xhr.readyState", xhr.readyState);
+          let status = xhr.status
+          if ((status >= 200 && status < 300) || status === 304) {
+            console.log(xhr.responseText)
+          } else {
+            console.log("xhr.status", xhr.status)
+          }
+        } else {
+          console.log("xhr.readyState", xhr.readyState);
+        }
+      }
+      xhr.send()
+    }
+
+  </script>
+</body>
+
+</html>
